@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Phuc</h2>
+
+<p>Dây là link học HTML</p>
+
+<a href="https://www.w3schools.com">Visit W3Schools</a>
+<img src="img_girl.jpg" width="500" height="600">
+
+
+</body>
+</html>

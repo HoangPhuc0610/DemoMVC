@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+<img src="https://scontent.fthd2-1.fna.fbcdn.net/v/t39.30808-1/467187038_3718468228483372_3431930647990886362_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e99d92&_nc_ohc=v82Sm0Wf_8MQ7kNvgHXB4ks&_nc_oc=Adhv8f-h-06ufHcWNKRkLICQsmtpLu2JUGZZTLY46ZD-UBbhGYunzi1O4UvERtQJeQs&_nc_zt=24&_nc_ht=scontent.fthd2-1.fna&_nc_gid=ARf-3pI8Q_kORXFekpXsVmi&oh=00_AYDMAhqtJ7rx35kK90z2_KtXdJB8eNUa_7sz27OJfpVoVQ&oe=6796D76D" alt="W3Schools.com">
+
+</body>
+</html>
