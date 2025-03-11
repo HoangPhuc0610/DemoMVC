@@ -1,17 +1,24 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MvcMovie.Models;
-
-public class Movie 
+namespace MvcMovie.Models
 {
-    public int Id { get; set; }
+    public class Movie 
+    {
+        public int Id { get; set; }
 
-    public string Title { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Title { get; set; } = string.Empty;
 
-    public Datetime ReleaseDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime ReleaseDate { get; set; }
 
-    public string? Genre { get; set; }
+        [StringLength(50)]
+        public string? Genre { get; set; }
 
-    public decimal? Price { get; set; }
-    
+        [Range(0, 1000)]
+        [DataType(DataType.Currency)]
+        public decimal? Price { get; set; }
+    }
 }
