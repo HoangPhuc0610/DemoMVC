@@ -3,9 +3,10 @@ using System.Text.Encodings.Web;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Data;
 using MvcMovie.Models;
+using MvcMovie.ExcelsProsess;
 
 
-namespace MvcProject.Controllers
+namespace MvcMovie.Controllers
 
 {
     
@@ -122,6 +123,36 @@ namespace MvcProject.Controllers
         {
             return (_context.Persons?.Any(e => e.PersonId == id)).GetValueOrDefault();
         }
-        
+
+        public async Task<IActionResult> UpLoads()
+
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>UpLoads(IFromFile file)
+        {
+            if (file == null)
+            {
+                string fileExtension = Path.GetExtension(file.FileName);
+                if (fileExtension != ".xls" && fileExtension != ".xlsx")
+                {
+                    ModelState.AddModelError("", "Please choose excel file to upload!");
+                }
+                else 
+                {
+                    var fileName = DateTime.Now.ToShortTimeString() + fileExtension;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "/UpLoads/Excels", fileName);
+                    var fileLocation = new FileInfo(filePath). ToString();
+                    using (var stream = new FileStream(filePath, FileMode.Create))   {
+                        await file.CopyToAsync(stream);
+                    }                
+                }
+
+            }
+            return View();
+        }
     }
+
 }
