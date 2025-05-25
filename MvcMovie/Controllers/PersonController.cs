@@ -9,9 +9,9 @@ using MvcMovie.ExcelsProsess;
 namespace MvcMovie.Controllers
 
 {
-    
+
     public class PersonController : Controller
-    { 
+    {
         private readonly ApplicationDbContext _context;
         public PersonController(ApplicationDbContext context)
         {
@@ -52,41 +52,41 @@ namespace MvcMovie.Controllers
             {
                 return NotFound();
             }
-                return View(person);
+            return View(person);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]            
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("PersonId,FullName,Address, Email")] Person person)
         {
             if (id != person.PersonId)
             {
-            return NotFound();
+                return NotFound();
             }
 
-        if (ModelState.IsValid)
-        {
-            try
+            if (ModelState.IsValid)
             {
-                _context.Update(person);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PersonExists(person.PersonId))
+                try
                 {
-                    return NotFound();
+                    _context.Update(person);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!PersonExists(person.PersonId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            return View(person);
         }
-        return View(person);
-        }
-    
+
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Persons == null)
@@ -131,7 +131,7 @@ namespace MvcMovie.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult>UpLoads(IFromFile file)
+        public async Task<IActionResult> UpLoads(IFromFile file)
         {
             if (file == null)
             {
@@ -140,14 +140,27 @@ namespace MvcMovie.Controllers
                 {
                     ModelState.AddModelError("", "Please choose excel file to upload!");
                 }
-                else 
+                else
                 {
                     var fileName = DateTime.Now.ToShortTimeString() + fileExtension;
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "/UpLoads/Excels", fileName);
-                    var fileLocation = new FileInfo(filePath). ToString();
-                    using (var stream = new FileStream(filePath, FileMode.Create))   {
+                    var fileLocation = new FileInfo(filePath).ToString();
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
                         await file.CopyToAsync(stream);
-                    }                
+                        var dt = _excelProcess.ExcelToDataTable(fileLocation);
+                        for (int i = 0; i < dt.Rows.Cout; i++)
+                        {
+                            var ps = new Person();
+                            ps.PersonID = dt.Rows[i][0].ToString();
+                            ps.FullName = dt.Rows[i][1].ToString();
+                            ps.Address = dt.Rows[i][2].ToString();
+                            _context.Add(ps);
+
+                        }
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
 
             }
