@@ -1,0 +1,17 @@
+using System.Web.Mvc;
+
+namespace MvcMovie.Controllers
+public class ControllerEmployee : Controller
+{
+    // Action 1: Danh sách nhân viên
+    public ActionResult Index()
+    {
+        return View();
+    }
+
+    // Action 2: Thông tin chi tiết nhân viên
+    public ActionResult Details()
+    {
+        return View();
+    }
+}
